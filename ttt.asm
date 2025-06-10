@@ -320,10 +320,6 @@ _read_symbol:
 
     mov bl, [sym]
     mov [choices + rax], bl
-    mov rsi, choices
-    mov rdi, choices_size
-    call _print
-    call _newline
 
     mov bl, [o_sym]
     cmp [sym], bl
@@ -374,43 +370,6 @@ _read_symbol:
     pop rbx
     jmp _run
 
-
-
-
-
-
-
-
-
-
-_pr_num:
-    lea rcx, [NUM_SIZE - 1]
-    mov rax, rdi
-    call .dtoa
-
-    mov rbx, rcx
-    neg rcx
-    lea rcx, [NUM_SIZE + rcx]
-
-    mov rax, WRITE
-    mov rdi, STDOUT
-    lea rsi, [num + rbx]
-    mov rdx, rcx
-    syscall
-    ret
-
-.dtoa:
-    mov rbx, BASE
-    xor rdx, rdx
-    div rbx
-
-    add rdx, '0'
-    mov [num + rcx], dl
-    dec rcx
-
-    cmp rax, 0
-    jne .dtoa
-    ret
 
 _print:
     push rdi
